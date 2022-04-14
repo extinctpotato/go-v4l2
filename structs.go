@@ -37,7 +37,7 @@ type v4l2_pix_format struct {
 }
 
 type v4l2_format struct {
-	typ uint32
+	typ uint
 	fmt [maxSizeFormatDotFmt]byte // union
 }
 
