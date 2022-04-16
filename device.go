@@ -64,12 +64,15 @@ func (dev *Device) SetPixelFormat(width, height, format int) error {
 		width:       uint32(width),
 		height:      uint32(height),
 		pixelformat: uint32(format),
-		field:       V4L2_FIELD_ANY,
+		field:       V4L2_FIELD_NONE,
 	}
 	fmt := v4l2_format{
 		typ: V4L2_BUF_TYPE_VIDEO_CAPTURE,
 		fmt: pfmt.marshal(),
 	}
+
+	VIDIOC_S_FMT := ioctl_iowr(uintptr('V'), 5, unsafe.Sizeof(v4l2_format{}))
+
 	return ioctl(dev.fd, VIDIOC_S_FMT, unsafe.Pointer(&fmt))
 }
 
