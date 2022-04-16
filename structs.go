@@ -64,8 +64,8 @@ type v4l2_timecode struct {
 }
 
 type timeval struct {
-	tv_sec  uint32
-	tv_usec uint32
+	tv_sec  uint
+	tv_usec uint
 }
 
 type v4l2_buffer struct {
