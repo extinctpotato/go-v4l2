@@ -193,6 +193,8 @@ func setControl(fd int, class, id uint32, value int32) error {
 		controls:   unsafe.Pointer(&ctrls),
 	}
 
+	VIDIOC_S_EXT_CTRLS := ioctl_iowr(uintptr('V'), 72, unsafe.Sizeof(v4l2_ext_controls{}))
+
 	return ioctl(fd, VIDIOC_S_EXT_CTRLS, unsafe.Pointer(&extctrls))
 }
 
@@ -216,6 +218,9 @@ func queryBuffer(fd int, n uint32) (length, offset uint32, err error) {
 		typ:    V4L2_BUF_TYPE_VIDEO_CAPTURE,
 		memory: V4L2_MEMORY_MMAP,
 	}
+
+	VIDIOC_QUERYBUF := ioctl_iowr(uintptr('V'), 9, unsafe.Sizeof(v4l2_buffer{}))
+
 	if err = ioctl(fd, VIDIOC_QUERYBUF, unsafe.Pointer(&qb)); err != nil {
 		return
 	}
