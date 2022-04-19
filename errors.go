@@ -9,10 +9,15 @@ type EmptyBufferError struct {
 
 type MmapError struct {
 	Err error
+	Fd  int
 }
 
 func (m *MmapError) Error() string {
-	return m.Err.Error()
+	return fmt.Sprintf(
+		"mmap on fd %d returned %s",
+		m.Fd,
+		m.Err.Error(),
+	)
 }
 
 func (e *EmptyBufferError) Error() string {

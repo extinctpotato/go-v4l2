@@ -116,6 +116,7 @@ func (dev *Device) Start() error {
 		); nil != err {
 			return &MmapError{
 				Err: err,
+				Fd:  dev.fd,
 			}
 		}
 
