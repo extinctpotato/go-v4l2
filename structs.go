@@ -11,7 +11,7 @@ const (
 	sizePixFormat             = 48
 )
 
-type v4l2_streamparam struct {
+type v4l2_streamparm struct {
 	typ  uint32
 	parm [maxSizeFormatDotFmt]byte
 }
