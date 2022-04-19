@@ -6,9 +6,12 @@ import (
 	"io"
 	"syscall"
 	"unsafe"
+	"log"
 
 	"golang.org/x/sys/unix"
 )
+
+var _ = log.Printf
 
 const (
 	defaultNumBuffers = 2
