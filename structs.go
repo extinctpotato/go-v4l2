@@ -11,6 +11,11 @@ const (
 	sizePixFormat             = 48
 )
 
+type v4l2_streamparam struct {
+	typ  uint32
+	parm [maxSizeFormatDotFmt]byte
+}
+
 type v4l2_capability struct {
 	driver       [16]uint8
 	card         [32]uint8
