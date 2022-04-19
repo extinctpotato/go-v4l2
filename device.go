@@ -114,7 +114,9 @@ func (dev *Device) Start() error {
 			unix.PROT_READ|unix.PROT_WRITE,
 			unix.MAP_SHARED,
 		); nil != err {
-			return err
+			return &MmapError{
+				Err: err,
+			}
 		}
 
 		// Enqueue to device for population
@@ -230,6 +232,14 @@ func queryBuffer(fd int, n uint32) (length, offset uint32, err error) {
 
 	length = qb.length
 	offset = nativeEndian.Uint32(qb.m[0:4])
+
+	if length == 0 {
+		err = &EmptyBufferError{
+			Length: length,
+			Offset: offset,
+		}
+	}
+
 	return
 }
 
