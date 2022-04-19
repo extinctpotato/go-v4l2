@@ -16,6 +16,20 @@ type v4l2_streamparam struct {
 	parm [maxSizeFormatDotFmt]byte
 }
 
+type v4l2_fract struct {
+	numerator   uint32
+	denominator uint32
+}
+
+type v4l2_captureparm struct {
+	capability   uint32
+	capturemode  uint32
+	timeperframe v4l2_fract
+	extendedmode uint32
+	readbuffers  uint32
+	reserved     [4]uint32
+}
+
 type v4l2_capability struct {
 	driver       [16]uint8
 	card         [32]uint8
