@@ -91,6 +91,21 @@ func (dev *Device) SetRepeatSequenceHeader(on bool) error {
 	return setCodecControl(dev.fd, V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER, value)
 }
 
+func (dev *Device) SetFramerate() error {
+	captureParm := v4l2_captureparm{}
+	captureParm.timeperframe.numerator = 1
+	captureParm.timeperframe.denominator = 255
+
+	streamParm := v4l2_streamparm{
+		typ: V4L2_BUF_TYPE_VIDEO_CAPTURE,
+		parm: captureParm.marshal(),
+	}
+
+	VIDIOC_S_PARM := ioctl_iowr(uintptr('V'), 22, unsafe.Sizeof(v4l2_streamparm{}))
+
+	return ioctl(dev.fd, VIDIOC_S_PARM, unsafe.Pointer(&streamParm))
+}
+
 // Start video capture
 func (dev *Device) Start() error {
 	// Request specified number of kernel-space buffers from device
