@@ -9,6 +9,7 @@ const (
 	maxSizeExtControlDotValue = 8
 	maxSizeFormatDotFmt       = 200
 	sizePixFormat             = 48
+	sizeCaptureParm           = 28
 )
 
 type v4l2_streamparm struct {
@@ -123,6 +124,14 @@ func (pfmt *v4l2_pix_format) marshal() [maxSizeFormatDotFmt]byte {
 	var b [maxSizeFormatDotFmt]byte
 
 	copy(b[0:sizePixFormat], (*[sizePixFormat]byte)(unsafe.Pointer(pfmt))[:])
+
+	return b
+}
+
+func (cparm *v4l2_captureparm) marshal() [maxSizeFormatDotFmt]byte {
+	var b [maxSizeFormatDotFmt]byte
+
+	copy(b[0:sizeCaptureParm], (*[sizeCaptureParm]byte)(unsafe.Pointer(cparm))[:])
 
 	return b
 }
