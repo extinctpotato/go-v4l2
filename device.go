@@ -101,7 +101,12 @@ func (dev *Device) SetFramerate() error {
 		parm: captureParm.marshal(),
 	}
 
+	VIDIOC_G_PARM := ioctl_iowr(uintptr('V'), 21, unsafe.Sizeof(v4l2_streamparm{}))
 	VIDIOC_S_PARM := ioctl_iowr(uintptr('V'), 22, unsafe.Sizeof(v4l2_streamparm{}))
+
+	if err := ioctl(dev.fd, VIDIOC_G_PARM, unsafe.Pointer(&streamParm)); err != nil {
+		return err
+	}
 
 	return ioctl(dev.fd, VIDIOC_S_PARM, unsafe.Pointer(&streamParm))
 }
