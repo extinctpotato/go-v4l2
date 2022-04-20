@@ -281,6 +281,9 @@ func enqueue(fd int, index int) error {
 		memory: V4L2_MEMORY_MMAP,
 		index:  uint32(index),
 	}
+
+	VIDIOC_QBUF := ioctl_iowr(uintptr('V'), 15, unsafe.Sizeof(v4l2_buffer{}))
+
 	return ioctl(fd, VIDIOC_QBUF, unsafe.Pointer(&qbuf))
 }
 
