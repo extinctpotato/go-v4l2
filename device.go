@@ -14,7 +14,7 @@ import (
 var _ = log.Printf
 
 const (
-	defaultNumBuffers = 2
+	defaultNumBuffers = 4
 )
 
 type Buffer struct {
