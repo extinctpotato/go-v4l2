@@ -2,7 +2,10 @@
 
 package v4l2
 
-import "unsafe"
+import (
+	"golang.org/x/sys/unix"
+	"unsafe"
+)
 
 const (
 	maxSizeBufferDotM         = 4
@@ -83,22 +86,17 @@ type v4l2_timecode struct {
 	userbits [4]uint8
 }
 
-type timeval struct {
-	tv_sec  uint
-	tv_usec uint
-}
-
 type v4l2_buffer struct {
 	index     uint32
 	typ       uint32
 	bytesused uint32
 	flags     uint32
 	field     uint32
-	timestamp timeval
+	timestamp unix.Timeval
 	timecode  v4l2_timecode
 	sequence  uint32
 	memory    uint32
-	m         [maxSizeBufferDotM]byte // union
+	m         [unsafe.Sizeof(unsafe.Pointer(uintptr(0)))]uint8
 	length    uint32
 	reserved2 uint32
 	reserved  uint32
