@@ -292,6 +292,9 @@ func dequeue(fd int) (int, int, error) {
 	dqbuf := v4l2_buffer{
 		typ: V4L2_BUF_TYPE_VIDEO_CAPTURE,
 	}
+
+	VIDIOC_DQBUF := ioctl_iowr(uintptr('V'), 17, unsafe.Sizeof(v4l2_buffer{}))
+
 	err := ioctl(fd, VIDIOC_DQBUF, unsafe.Pointer(&dqbuf))
 	return int(dqbuf.index), int(dqbuf.bytesused), err
 }
