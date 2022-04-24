@@ -54,7 +54,7 @@ func main() {
 	if err := dev.SetBitrate(int32(flagBitrate)); nil != err {
 		log.Printf("Unable to set bitrate (%s), attempting to set framerate...", err)
 
-		if err := dev.SetFramerate(); err != nil {
+		if err := dev.SetMaxFramerate(); err != nil {
 			log.Fatalf("Unable to set framerate (%s), bailing!", err)
 		}
 
