@@ -32,8 +32,9 @@ const (
 	V4L2_FIELD_ANY  = 0
 	V4L2_FIELD_NONE = 1
 
-	V4L2_PIX_FMT_JPEG = 'J' | 'P'<<8 | 'E'<<16 | 'G'<<24
-	V4L2_PIX_FMT_H264 = 'H' | '2'<<8 | '6'<<16 | '4'<<24
+	V4L2_PIX_FMT_JPEG  = 'J' | 'P'<<8 | 'E'<<16 | 'G'<<24
+	V4L2_PIX_FMT_MJPEG = 'M' | 'J'<<8 | 'P'<<16 | 'G'<<24
+	V4L2_PIX_FMT_H264  = 'H' | '2'<<8 | '6'<<16 | '4'<<24
 
 	V4L2_MEMORY_MMAP = 1
 
