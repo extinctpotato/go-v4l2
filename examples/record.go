@@ -35,7 +35,7 @@ func main() {
 	// Open device
 	dev, err := v4l2.Open("/dev/video0")
 	if nil != err {
-		log.Fatal(err)
+		log.Fatalf("Unable to open video device (%s)", err)
 	}
 	defer dev.Close()
 
@@ -45,20 +45,30 @@ func main() {
 		flagHeight,
 		v4l2.V4L2_PIX_FMT_H264,
 	); nil != err {
-		log.Fatal(err)
+		log.Fatalf("Unable to set output format (%s)", err)
 	}
 
-	// Set bitrate
+	flowType := "Bitrate"
+
+	// Set bitrate or framerate
 	if err := dev.SetBitrate(int32(flagBitrate)); nil != err {
-		log.Fatal(err)
+		log.Printf("Unable to set bitrate (%s), attempting to set framerate...", err)
+
+		if err := dev.SetFramerate(); err != nil {
+			log.Fatalf("Unable to set framerate (%s), bailing!", err)
+		}
+
+		flowType = "Framerate"
 	}
+
+	log.Printf("%s set successfully", flowType)
 
 	// Set timer to stop stream after ten seconds
 	timer := time.NewTimer(10 * time.Second)
 
 	// Start stream
 	if err := dev.Start(); nil != err {
-		log.Fatal(err)
+		log.Fatalf("Unable to start recording (%s)", err)
 	}
 
 	// Open file for writing
@@ -84,6 +94,6 @@ ReadLoop:
 
 	// Stop stream
 	if err := dev.Stop(); nil != err {
-		log.Fatal()
+		log.Fatalf("Unable to stop recording (%s)", err)
 	}
 }
