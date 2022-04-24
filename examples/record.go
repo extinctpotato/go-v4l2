@@ -43,7 +43,7 @@ func main() {
 	if err := dev.SetPixelFormat(
 		flagWidth,
 		flagHeight,
-		v4l2.V4L2_PIX_FMT_H264,
+		v4l2.V4L2_PIX_FMT_MJPEG,
 	); nil != err {
 		log.Fatalf("Unable to set output format (%s)", err)
 	}
